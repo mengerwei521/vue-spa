@@ -16,6 +16,8 @@ export default {
     this.$store.dispatch('getCategorys')
     //异步获取shops
     this.$store.dispatch('getShops')
+    // 异步获取user, 并保存到state
+    this.$store.dispatch('getUser')
   },
   components: {
     FooterGuide

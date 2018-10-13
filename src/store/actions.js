@@ -4,12 +4,16 @@
 import {
   reqAddress,
   reqFoodCategorys,
-  reqShops
+  reqShops,
+  reqUser,
+  reqLogout
 } from "../api";
 import {
   RECEIVE_SHOPS,
   RECEIVE_ADDRESS,
-  RECEIVE_CATEGORYS
+  RECEIVE_CATEGORYS,
+  RECEIVE_USER,
+  RESET_USER
 } from "./mutation-type";
 
 export default {
@@ -43,6 +47,25 @@ export default {
       const shops = result.data
       //commit给mutation
       commit(RECEIVE_SHOPS,{shops})
+    }
+  },
+  //同步保存用户的action
+  saveUser({commit},user){
+    commit(RECEIVE_USER,{user})
+  },
+  //异步获取用户的action
+  async getUser ({commit}){
+    const result = await reqUser()
+    if (result.code === 0){
+      const user = result.data
+      commit(RECEIVE_USER,{user})
+    }
+  },
+  //异步退出登录的action
+  async logout ({commit}){
+    const result = await reqLogout()
+    if (result.code === 0){
+    commit(RESET_USER)
     }
   }
 }
